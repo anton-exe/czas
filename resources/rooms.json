@@ -1,0 +1,38 @@
+{
+    "START": "outside",
+    "rooms": {
+        "outside": {
+            "desc": "outside the main entrance of the university",
+            "conns": {
+                "east": "theatre",
+                "north": "lab",
+                "west": "pub"
+            }
+        },
+        "theatre": {
+            "desc": "in a lecture theatre",
+            "conns": {
+                "west": "outside"
+            }
+        },
+        "pub": {
+            "desc": "in the campus pub",
+            "conns": {
+                "east": "outside"
+            }
+        },
+        "lab": {
+            "desc": "in a computing lab",
+            "conns": {
+                "south": "outside",
+                "east": "office"
+            }
+        },
+        "office": {
+            "desc": "in the computing admin office",
+            "conns": {
+                "west": "lab"
+            }
+        }
+    }
+}

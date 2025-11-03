@@ -1,14 +1,10 @@
-public class Item {
+class Item {
     private String description;
     private String name;
-    private String location;
-    private int id;
-    private boolean isVisible;
 
     public Item(String name, String description) {
         this.name = name;
         this.description = description;
-        this.isVisible = true;
     }
 
     public String getDescription() {
@@ -25,29 +21,5 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public boolean isVisible() {
-        return isVisible;
-    }
-
-    public void setVisible(boolean visible) {
-        isVisible = visible;
     }
 }

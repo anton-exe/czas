@@ -1,13 +1,15 @@
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
-public class Room {
+class Room {
     private String description;
-    private Map<String, Room> exits; // Map direction to neighboring Room
+    private HashMap<String, Room> exits; // Map direction to neighboring Room
+    private ArrayList<Item> items;
 
     public Room(String description) {
         this.description = description;
-        exits = new HashMap<>();
+        this.exits = new HashMap<>();
+        this.items = new ArrayList<>();
     }
 
     public String getDescription() {
