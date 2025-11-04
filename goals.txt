@@ -2,7 +2,7 @@ The new and enhanced Java text adventure should be used to illustrate many key J
 
 [√] Object-oriented concepts: Classes, objects, inheritance, interfaces, polymorphism (e.g., different item types with subclassing).
 
-[ ] GUI programming: Swing or JavaFX interfaces for richer interaction.
+[√] GUI programming: Swing or JavaFX interfaces for richer interaction.
 
 [½] File I/O: Loading and saving game state or configurations.
 

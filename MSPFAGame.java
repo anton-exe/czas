@@ -1,30 +1,23 @@
-/* This game is a classic text-based adventure set in a university environment.
-   The Player starts outside the main entrance and can navigate through different rooms like a 
-   lecture theatre, campus pub, computing lab, and admin office using simple text commands (e.g., "go east", "go west").
-    The game provides descriptions of each location and lists possible exits.
-
-Key features include:
-Room navigation: Moving among interconnected rooms with named exits.
-Simple command parser: Recognizes a limited set of commands like "go", "help", and "quit".
-Player character: Tracks current location and handles moving between rooms.
-Text descriptions: Provides immersive text output describing the Player's surroundings and available options.
-Help system: Lists valid commands to guide the Player.
-Overall, it recreates the classic Zork interactive fiction experience with a university-themed setting, 
-emphasizing exploration and simple command-driven gameplay
-*/
+/* this is a text adventure game based on the MSPA (MicroSoft Paint Adventures) series, specifically homestuck
+ * 
+ * this was made for a university project
+ */
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Scanner;
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MSPFAGame {
+    // @Override
+    // public void start(Stage stage) {
+    // GUI.start(stage);
+    // }
+
     private static Player player;
     private static HashMap<String, Room> rooms;
-    public static Scanner input;
 
     public static void main(String[] args) throws IOException {
         rooms = new HashMap<>();
@@ -62,16 +55,30 @@ public class MSPFAGame {
         // create the Player character and start outside
         player = new Player("Player", startRoom);
 
-        System.out.println();
-        System.out.println("Welcome to the University adventure!");
-        System.out.println("Type 'help' if you need help.");
+        // show GUI
+        // launch(args);
+        GUI.init();
 
-        input = new Scanner(System.in);
+        GUI.print("\n");
+        GUI.print("Welcome to the University adventure!\n");
+        GUI.print("Type 'help' if you need help.\n");
 
-        while (true) {
-            System.out.print("\n" + player.getCurrentRoom().getLongDescription() + "\n > ");
-            Parser.parseCmd(input.nextLine());
+        printInfo();
+    }
+
+    public static void printInfo() {
+        GUI.print("\n" + player.getCurrentRoom().getLongDescription());
+    }
+
+    public static void exit() {
+        exit(true);
+    }
+
+    public static void exit(boolean save) {
+        if (save) {
+            System.out.println("save function will go here");
         }
+        System.exit(0);
     }
 
     public static Player getPlayer() {

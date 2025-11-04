@@ -29,7 +29,7 @@ class Player {
             currentRoom = nextRoom;
             // System.out.println("You moved to: " + currentRoom.getDescription());
         } else {
-            System.out.println("You can't go that way!");
+            GUI.print("You can't go that way!\n");
         }
     }
 }
