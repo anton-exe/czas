@@ -22,7 +22,7 @@ public class MSPFAGame {
     public static void main(String[] args) throws IOException {
         rooms = new HashMap<>();
 
-        Room voidRoom = new Room("in the void");
+        Room voidRoom = new Room("in the void", null);
         Room startRoom = voidRoom;
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -31,7 +31,8 @@ public class MSPFAGame {
         Iterator<String> roomNames = jsonNode.get("rooms").fieldNames();
         while (roomNames.hasNext()) {
             String roomName = roomNames.next();
-            Room room = new Room(jsonNode.get("rooms").get(roomName).get("desc").asText(""));
+            Room room = new Room(jsonNode.get("rooms").get(roomName).get("desc").asText(""),
+                    jsonNode.get("rooms").get(roomName).get("items"));
             rooms.put(roomName, room);
 
             if (roomName.equals(jsonNode.get("START").asText())) {
@@ -59,9 +60,10 @@ public class MSPFAGame {
         // launch(args);
         GUI.init();
 
-        GUI.print("\n");
-        GUI.print("Welcome to the University adventure!\n");
-        GUI.print("Type 'help' if you need help.\n");
+        GUI.println();
+        GUI.println("A young person stands in their room.");
+        GUI.println("It just so happens that this day, the 27th of July, is this person's 13th birthday.");
+        GUI.println("\nType 'help' if you need help.");
 
         printInfo();
     }

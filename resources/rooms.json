@@ -1,37 +1,35 @@
 {
-    "START": "outside",
+    "START": "bedroom",
     "rooms": {
-        "outside": {
-            "desc": "outside the main entrance of the university",
+        "bedroom": {
+            "desc": "inside your own bedroom",
             "conns": {
-                "east": "theatre",
-                "north": "lab",
-                "west": "pub"
+                "out": "uphall"
+            },
+            "items": {
+                "chest": {
+                    "fake arms": ""
+                }
             }
         },
-        "theatre": {
-            "desc": "in a lecture theatre",
+        "bathroom": {
+            "desc": "inside the bathroom",
             "conns": {
-                "west": "outside"
+                "out": "uphall"
             }
         },
-        "pub": {
-            "desc": "in the campus pub",
+        "uphall": {
+            "desc": "in the upstairs hallway",
             "conns": {
-                "east": "outside"
+                "left": "bedroom",
+                "right": "bathroom",
+                "down": "downstairs"
             }
         },
-        "lab": {
-            "desc": "in a computing lab",
+        "downstairs": {
+            "desc": "in the downstairs sitting room",
             "conns": {
-                "south": "outside",
-                "east": "office"
-            }
-        },
-        "office": {
-            "desc": "in the computing admin office",
-            "conns": {
-                "west": "lab"
+                "up": "uphall"
             }
         }
     }

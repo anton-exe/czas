@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.TreeMap;
 import java.util.Map;
+import java.util.Set;
 
 class Parser {
     final static public TreeMap<String, Command> cmds = new TreeMap<>(Map.ofEntries(
@@ -25,11 +26,48 @@ class Parser {
                     "go to the area in the specified direction") {
                 @Override
                 public void commandLogic(String[] args) {
-                    if (args.length < 1) {
-                        GUI.print("you need to specify a direction!\n");
+                    MSPFAGame.getPlayer().move(args[0]);
+                };
+            }),
+            Map.entry("inv", new Command("inv", "view inventory", "inv", "") {
+                @Override
+                public void commandLogic(String[] args) {
+                    if (MSPFAGame.getPlayer().getInventory().size() < 1) {
+                        GUI.println("you don't have anything!");
                         return;
                     }
-                    MSPFAGame.getPlayer().move(args[0]);
+                    GUI.println("you have: ");
+                    for (Item item : MSPFAGame.getPlayer().getInventory()) {
+                        GUI.printf("- %s\n", item.getName());
+                    }
+                    GUI.println();
+                };
+            }),
+            Map.entry("look", new Command("look", "look around", "look",
+                    "list item containers") {
+                @Override
+                public void commandLogic(String[] args) {
+                    Set<String> itemAreas = MSPFAGame.getPlayer().getCurrentRoom().getItemAreas();
+                    if (itemAreas.size() < 1) {
+                        GUI.println("nothing here!");
+                        return;
+                    }
+                    GUI.print("you see: ");
+                    for (String area : itemAreas) {
+                        GUI.print(" " + area);
+                    }
+                    GUI.println();
+                };
+            }),
+            Map.entry("open", new Command("open", "open a container", "open &lt;container&gt;",
+                    "open a container and take all items inside") {
+                @Override
+                public void commandLogic(String[] args) {
+                    if (args.length < 1) {
+                        GUI.print("you need to specify a container!\n");
+                        return;
+                    }
+                    MSPFAGame.getPlayer().takeItem(args[0]);
                 };
             }),
             Map.entry("quit", new Command("quit", "quit the game") {

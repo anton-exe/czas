@@ -11,6 +11,24 @@ class Player {
         this.inventory = new ArrayList<>();
     }
 
+    public void takeItem(String area) {
+        ArrayList<Item> items = currentRoom.takeItem(area);
+        if (items == null) {
+            GUI.println("<font color=red>no such container!</font>");
+            return;
+        }
+        inventory.addAll(items);
+        GUI.println("picked up:");
+        for (Item item : items) {
+            GUI.printf("- %s\n", item.getName());
+        }
+    }
+
+    public ArrayList<Item> getInventory() {
+        return inventory;
+
+    }
+
     public String getName() {
         return name;
     }

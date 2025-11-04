@@ -120,7 +120,9 @@ class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 print("\n\n<font color=#aaccff>==> " + inputLine.getText() + "</font>\n\n");
+                GUI.print("<font color=#ffffaa>");
                 Parser.parseCmd(inputLine.getText());
+                GUI.print("</font>");
                 MSPFAGame.printInfo();
                 inputLine.setText("");
             }

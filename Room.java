@@ -1,15 +1,45 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 class Room {
     private String description;
     private HashMap<String, Room> exits; // Map direction to neighboring Room
-    private ArrayList<Item> items;
+    private HashMap<String, ArrayList<Item>> items;
 
-    public Room(String description) {
+    public Room(String description, JsonNode itemNode) {
         this.description = description;
         this.exits = new HashMap<>();
-        this.items = new ArrayList<>();
+
+        this.items = new HashMap<>();
+
+        if (itemNode == null) {
+            return;
+        }
+        Iterator<String> itemAreaNames = itemNode.fieldNames();
+        while (itemAreaNames.hasNext()) {
+            String itemArea = itemAreaNames.next();
+            ArrayList<Item> items = new ArrayList<>();
+            Iterator<String> itemNames = itemNode.get(itemArea).fieldNames();
+            while (itemNames.hasNext()) {
+                String itemName = itemNames.next();
+                items.add(new Item(itemName, itemNode.get(itemArea).get(itemName).asText()));
+            }
+            this.items.put(itemArea, items);
+        }
+    }
+
+    public Set<String> getItemAreas() {
+        return items.keySet();
+    }
+
+    public ArrayList<Item> takeItem(String area) {
+        ArrayList<Item> items = this.items.get(area);
+        this.items.remove(area);
+        return items;
     }
 
     public String getDescription() {
