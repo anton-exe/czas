@@ -1,11 +1,3 @@
-// import javafx.application.Application;
-// import javafx.event.ActionEvent;
-// import javafx.event.EventHandler;
-// import javafx.scene.Scene;
-// import javafx.scene.control.Button;
-// import javafx.scene.layout.StackPane;
-// import javafx.stage.Stage;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
@@ -15,29 +7,6 @@ import java.io.IOException;
 import javax.swing.*;
 
 class GUI {
-    // @Override
-    // public void start(Stage primaryStage) {
-    // System.out.println("in start()");
-    // Button btn = new Button();
-    // btn.setText("Say 'Hello World'");
-    // btn.setOnAction(new EventHandler<ActionEvent>() {
-    //
-    // @Override
-    // public void handle(ActionEvent event) {
-    // System.out.println("Hello World!");
-    // }
-    // });
-    //
-    // StackPane root = new StackPane();
-    // root.getChildren().add(btn);
-    //
-    // Scene scene = new Scene(root, 300, 250);
-    //
-    // primaryStage.setTitle("Hello World!");
-    // primaryStage.setScene(scene);
-    // primaryStage.show();
-    // }
-
     private static String console = new String(new char[100]).replace("\0", "<br>");
     private static JFrame frame;
     private static JTextPane consoleArea;

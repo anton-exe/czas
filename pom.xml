@@ -17,11 +17,6 @@
     </properties>
 
     <dependencies>
-        <!-- <dependency> -->
-        <!--     <groupId>org.openjfx</groupId> -->
-        <!--     <artifactId>javafx-controls</artifactId> -->
-        <!--     <version>25</version> -->
-        <!-- </dependency> -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -107,14 +102,6 @@
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>3.6.1</version>
             </plugin>
-            <!-- <plugin> -->
-            <!--     <groupId>org.openjfx</groupId> -->
-            <!--     <artifactId>javafx-maven-plugin</artifactId> -->
-            <!--     <version>0.0.8</version> -->
-            <!--     <configuration> -->
-            <!--         <mainClass>MSPFAGame</mainClass> -->
-            <!--     </configuration> -->
-            <!-- </plugin> -->
         </plugins>
         <resources>
             <resource>

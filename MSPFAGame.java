@@ -11,11 +11,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MSPFAGame {
-    // @Override
-    // public void start(Stage stage) {
-    // GUI.start(stage);
-    // }
-
     private static Player player;
     private static HashMap<String, Room> rooms;
 
