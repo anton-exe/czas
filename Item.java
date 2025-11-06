@@ -2,6 +2,10 @@ class Item {
     private String description;
     private String name;
 
+    public Item() {
+
+    }
+
     public Item(String name, String description) {
         this.name = name;
         this.description = description;

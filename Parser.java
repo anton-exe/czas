@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.Map;
 import java.util.Set;
@@ -9,15 +9,15 @@ class Parser {
                     "in usage: [square brackets] show OPTIONAL arguments,\n" +
                             "           &lt;angle brackets&gt; show REQUIRED arguments") {
                 @Override
-                public void commandLogic(String[] args) {
+                public void commandLogic(String args) {
                     GUI.print("<font color=#ffffaa>");
-                    if (args.length < 1) {
+                    if (args.length() < 1) {
                         GUI.println("Available commands:");
                         for (Command cmd : cmds.values()) {
                             GUI.println(cmd.getShortHelp());
                         }
                     } else {
-                        GUI.println(cmds.get(args[0]).getLongHelp());
+                        GUI.println(cmds.get(args).getLongHelp());
                     }
                     GUI.print("</font>");
                 };
@@ -25,20 +25,31 @@ class Parser {
             Map.entry("go", new Command("go", "move to new area", "go &lt;direction&gt;",
                     "go to the area in the specified direction") {
                 @Override
-                public void commandLogic(String[] args) {
-                    MSPFAGame.getPlayer().move(args[0]);
+                public void commandLogic(String args) {
+                    MSPFAGame.getPlayer().move(args);
+                };
+            }),
+            Map.entry("drop", new Command("drop", "drop an item", "drop &lt;item&gt;",
+                    "drop an item from your inventory onto the floor") {
+                @Override
+                public void commandLogic(String args) {
+                    if (args.length() < 1) {
+                        GUI.print("you need to specify an item!\n");
+                        return;
+                    }
+                    MSPFAGame.getPlayer().dropItem(args);
                 };
             }),
             Map.entry("inv", new Command("inv", "view inventory", "inv", "") {
                 @Override
-                public void commandLogic(String[] args) {
+                public void commandLogic(String args) {
                     if (MSPFAGame.getPlayer().getInventory().size() < 1) {
                         GUI.println("you don't have anything!");
                         return;
                     }
                     GUI.println("you have: ");
                     for (Item item : MSPFAGame.getPlayer().getInventory()) {
-                        GUI.printf("- %s\n", item.getName());
+                        GUI.printf("- %s: %s\n", item.getName(), item.getDescription());
                     }
                     GUI.println();
                 };
@@ -46,40 +57,62 @@ class Parser {
             Map.entry("look", new Command("look", "look around", "look",
                     "list item containers") {
                 @Override
-                public void commandLogic(String[] args) {
+                public void commandLogic(String args) {
                     Set<String> itemAreas = MSPFAGame.getPlayer().getCurrentRoom().getItemAreas();
-                    if (itemAreas.size() < 1) {
+                    ArrayList<Item> floorItems = MSPFAGame.getPlayer().getCurrentRoom().getFloorItems();
+                    if (itemAreas.size() < 2 && floorItems.size() < 1) {
                         GUI.println("nothing here!");
                         return;
                     }
-                    GUI.print("you see: ");
-                    for (String area : itemAreas) {
-                        GUI.print(" " + area);
+                    if (itemAreas.size() > 1) {
+                        GUI.print("you see: ");
+                        for (String area : itemAreas) {
+                            if (area == "floor") {
+                                continue;
+                            }
+                            GUI.print(" " + area);
+                        }
+                        GUI.println();
                     }
-                    GUI.println();
+                    if (floorItems.size() > 0) {
+                        GUI.println("the floor has:");
+                        for (Item item : floorItems) {
+                            GUI.printf("- %s", item.getName());
+                        }
+                        GUI.println();
+                    }
                 };
             }),
             Map.entry("open", new Command("open", "open a container", "open &lt;container&gt;",
                     "open a container and take all items inside") {
                 @Override
-                public void commandLogic(String[] args) {
-                    if (args.length < 1) {
+                public void commandLogic(String args) {
+                    if (args.length() < 1 || args == "floor") {
                         GUI.print("you need to specify a container!\n");
                         return;
                     }
-                    MSPFAGame.getPlayer().takeItem(args[0]);
+                    MSPFAGame.getPlayer().takeItemContainer(args);
+                };
+            }),
+            Map.entry("pickup", new Command("pickup", "pickup all floor items", "pickup") {
+                @Override
+                public void commandLogic(String args) {
+                    MSPFAGame.getPlayer().takeItemContainer("floor");
                 };
             }),
             Map.entry("quit", new Command("quit", "quit the game") {
                 @Override
-                public void commandLogic(String[] args) {
+                public void commandLogic(String args) {
                     MSPFAGame.exit();
                 };
             })));
 
     public static void parseCmd(String cmd) {
         String commandWord = cmd.split(" ")[0];
-        String[] args = Arrays.copyOfRange(cmd.split(" "), 1, cmd.split(" ").length);
+        String args = "";
+        if (cmd.split(" ").length > 1) {
+            args = cmd.split(" ", 2)[1];
+        }
         if (cmds.containsKey(commandWord)) {
             cmds.get(commandWord).commandLogic(args);
         } else {
@@ -121,5 +154,5 @@ abstract class Command {
         return String.format("%s\n-----\n%s\n%s", usage, shortDesc, description);
     }
 
-    public abstract void commandLogic(String[] args);
+    public abstract void commandLogic(String args);
 }

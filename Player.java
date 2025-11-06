@@ -11,8 +11,8 @@ class Player {
         this.inventory = new ArrayList<>();
     }
 
-    public void takeItem(String area) {
-        ArrayList<Item> items = currentRoom.takeItem(area);
+    public void takeItemContainer(String area) {
+        ArrayList<Item> items = currentRoom.takeItemContainer(area);
         if (items == null) {
             GUI.println("<font color=red>no such container!</font>");
             return;
@@ -22,6 +22,31 @@ class Player {
         for (Item item : items) {
             GUI.printf("- %s\n", item.getName());
         }
+    }
+
+    public void dropItem(String itemName) {
+        Item item = null;
+        System.out.println();
+        for (Item i : inventory) {
+            System.out.println(i.getName());
+            if (i.getName().equals(itemName)) {
+                item = i;
+            }
+        }
+        if (item == null) {
+            GUI.println("<font color=red>no such item!</font>");
+            return;
+        }
+        dropItem(item);
+    }
+
+    public void dropItem(Item item) {
+        dropItem(item, "floor");
+    }
+
+    public void dropItem(Item item, String area) {
+        currentRoom.dropItem(item, area);
+        inventory.remove(item);
     }
 
     public ArrayList<Item> getInventory() {

@@ -7,27 +7,29 @@
                 "out": "uphall"
             },
             "items": {
-                "chest": {
-                    "fake arms": ""
-                }
-            }
-        },
-        "bathroom": {
-            "desc": "inside the bathroom",
-            "conns": {
-                "out": "uphall"
+                "chest": [
+                    {
+                        "name": "fake arms",
+                        "description": "placeholder test item"
+                    }
+                ],
+                "floor": [
+                    {
+                        "name": "placeholder",
+                        "description": "..."
+                    }
+                ]
             }
         },
         "uphall": {
             "desc": "in the upstairs hallway",
             "conns": {
                 "left": "bedroom",
-                "right": "bathroom",
                 "down": "downstairs"
             }
         },
         "downstairs": {
-            "desc": "in the downstairs sitting room",
+            "desc": "in the downstairs hallway",
             "conns": {
                 "up": "uphall"
             }
