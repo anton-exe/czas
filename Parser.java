@@ -26,7 +26,7 @@ class Parser {
                     "go to the area in the specified direction") {
                 @Override
                 public void commandLogic(String args) {
-                    MSPFAGame.getPlayer().move(args);
+                    Game.getPlayer().move(args);
                 };
             }),
             Map.entry("drop", new Command("drop", "drop an item", "drop &lt;item&gt;",
@@ -37,18 +37,18 @@ class Parser {
                         GUI.print("you need to specify an item!\n");
                         return;
                     }
-                    MSPFAGame.getPlayer().dropItem(args);
+                    Game.getPlayer().dropItem(args);
                 };
             }),
             Map.entry("inv", new Command("inv", "view inventory", "inv", "") {
                 @Override
                 public void commandLogic(String args) {
-                    if (MSPFAGame.getPlayer().getInventory().size() < 1) {
+                    if (Game.getPlayer().getInventory().size() < 1) {
                         GUI.println("you don't have anything!");
                         return;
                     }
                     GUI.println("you have: ");
-                    for (Item item : MSPFAGame.getPlayer().getInventory()) {
+                    for (Item item : Game.getPlayer().getInventory()) {
                         GUI.printf("- %s: %s\n", item.getName(), item.getDescription());
                     }
                     GUI.println();
@@ -58,8 +58,8 @@ class Parser {
                     "list item containers") {
                 @Override
                 public void commandLogic(String args) {
-                    Set<String> itemAreas = MSPFAGame.getPlayer().getCurrentRoom().getItemAreas();
-                    ArrayList<Item> floorItems = MSPFAGame.getPlayer().getCurrentRoom().getFloorItems();
+                    Set<String> itemAreas = Game.getPlayer().getCurrentRoom().getItemAreas();
+                    ArrayList<Item> floorItems = Game.getPlayer().getCurrentRoom().getFloorItems();
                     if (itemAreas.size() < 2 && floorItems.size() < 1) {
                         GUI.println("nothing here!");
                         return;
@@ -91,8 +91,8 @@ class Parser {
                         GUI.print("you need to specify a name!\n");
                         return;
                     }
-                    MSPFAGame.getPlayer().setName(args);
-                    GUI.printf("Your name is now: %s\n", MSPFAGame.getPlayer().getName());
+                    Game.getPlayer().setName(args);
+                    GUI.printf("Your name is now: %s\n", Game.getPlayer().getName());
                 };
             }),
             Map.entry("open", new Command("open", "open a container", "open &lt;container&gt;",
@@ -103,19 +103,19 @@ class Parser {
                         GUI.print("you need to specify a container!\n");
                         return;
                     }
-                    MSPFAGame.getPlayer().takeItemContainer(args);
+                    Game.getPlayer().takeItemContainer(args);
                 };
             }),
             Map.entry("pickup", new Command("pickup", "pickup all floor items", "pickup") {
                 @Override
                 public void commandLogic(String args) {
-                    MSPFAGame.getPlayer().takeItemContainer("floor");
+                    Game.getPlayer().takeItemContainer("floor");
                 };
             }),
             Map.entry("quit", new Command("quit", "quit the game") {
                 @Override
                 public void commandLogic(String args) {
-                    MSPFAGame.exit();
+                    Game.exit();
                 };
             })));
 

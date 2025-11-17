@@ -1,4 +1,4 @@
-/* this is a text adventure game based on the MSPA (MicroSoft Paint Adventures) series, specifically homestuck
+/* this is a text adventure game
  * 
  * this was made for a university project
  */
@@ -10,7 +10,7 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class MSPFAGame {
+public class Game {
     private static Player player;
     private static HashMap<String, Room> rooms;
 
@@ -21,7 +21,7 @@ public class MSPFAGame {
         Room startRoom = voidRoom;
 
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(MSPFAGame.class.getResourceAsStream("/rooms.json"));
+        JsonNode jsonNode = objectMapper.readTree(Game.class.getResourceAsStream("/rooms.json"));
 
         Iterator<String> roomNames = jsonNode.get("rooms").fieldNames();
         while (roomNames.hasNext()) {
@@ -56,8 +56,7 @@ public class MSPFAGame {
         GUI.init();
 
         GUI.println();
-        GUI.println("A young person stands in their room.");
-        GUI.println("It just so happens that this day, the 27th of July, is this person's 13th birthday.");
+        GUI.println("[[PLACEHOLDER]]");
         GUI.println("\nType 'help' if you need help.");
 
         printInfo();

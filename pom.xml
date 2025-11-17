@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ie.anton</groupId>
-    <artifactId>MSPFAGame</artifactId>
+    <artifactId>Czas</artifactId>
     <version>0.1.0</version>
 
-    <name>MSPFAGame</name>
+    <name>Czas</name>
     <!-- <url>http://www.example.com</url> -->
 
     <properties>
@@ -72,13 +72,13 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>MSPFAGame</mainClass>
+                                    <mainClass>Game</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>MSPFAGame</finalName>
+                            <finalName>Czas</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                         </configuration>
                     </execution>

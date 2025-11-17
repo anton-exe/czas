@@ -6,9 +6,9 @@ The new and enhanced Java text adventure should be used to illustrate many key J
 
 [½] File I/O: Loading and saving game state or configurations.
 
-[ ] Collections framework: Use of List, Map, Set for storing rooms, items, commands, NPCs.
+[√] Collections framework: Use of List, Map, Set for storing rooms, items, commands, NPCs.
 
-[ ] Exception handling: Managing invalid user input or game errors gracefully.
+[√] Exception handling: Managing invalid user input or game errors gracefully.
 
 [½] Input parsing: String manipulation, tokenization, and command pattern interpretation.
 
@@ -25,13 +25,13 @@ The new and enhanced Java text adventure should be used to illustrate many key J
 [ ] Annotations: Metadata for commands or game rules.
 
 Advanced:
-   [ ] Multithreading: Background tasks like timed events or NPC behaviors.
+   [~] Multithreading: Background tasks like timed events or NPC behaviors.
    [ ] Networking: Multiplayer functionalities or online leaderboards.
 
 
 Here are some possible extensions you might use to implement some of the above:
 
-[ ] Add items and inventory: Allow players to pick up, use, and drop items scattered throughout rooms. Manage player inventory and item interactions.
+[√] Add items and inventory: Allow players to pick up, use, and drop items scattered throughout rooms. Manage player inventory and item interactions.
 
 [ ] Introduce puzzles and challenges: Implement simple logic puzzles or locked doors requiring keys or solving riddles to progress.
 
