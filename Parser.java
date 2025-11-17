@@ -83,6 +83,18 @@ class Parser {
                     }
                 };
             }),
+            Map.entry("name", new Command("name", "set your name", "name &lt;new name&gt;",
+                    "") {
+                @Override
+                public void commandLogic(String args) {
+                    if (args.length() < 1) {
+                        GUI.print("you need to specify a name!\n");
+                        return;
+                    }
+                    MSPFAGame.getPlayer().setName(args);
+                    GUI.printf("Your name is now: %s\n", MSPFAGame.getPlayer().getName());
+                };
+            }),
             Map.entry("open", new Command("open", "open a container", "open &lt;container&gt;",
                     "open a container and take all items inside") {
                 @Override

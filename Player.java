@@ -22,6 +22,7 @@ class Player {
         for (Item item : items) {
             GUI.printf("- %s\n", item.getName());
         }
+        GUI.rerenderInventory();
     }
 
     public void dropItem(String itemName) {
@@ -38,24 +39,30 @@ class Player {
             return;
         }
         dropItem(item);
+        GUI.rerenderInventory();
     }
 
     public void dropItem(Item item) {
         dropItem(item, "floor");
+        GUI.rerenderInventory();
     }
 
     public void dropItem(Item item, String area) {
         currentRoom.dropItem(item, area);
         inventory.remove(item);
+        GUI.rerenderInventory();
     }
 
     public ArrayList<Item> getInventory() {
         return inventory;
-
     }
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Room getCurrentRoom() {

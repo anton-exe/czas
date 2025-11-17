@@ -49,7 +49,7 @@ public class MSPFAGame {
         }
 
         // create the Player character and start outside
-        player = new Player("Player", startRoom);
+        player = new Player("DebugPlayer", startRoom);
 
         // show GUI
         // launch(args);

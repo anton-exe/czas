@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -11,6 +12,7 @@ class GUI {
     private static JFrame frame;
     private static JTextPane consoleArea;
     private static JScrollPane consoleScrollPane;
+    private static JTextArea inventoryArea;
 
     public static void print(String text) {
         console += text.replaceAll("\n", "<br>");
@@ -41,6 +43,19 @@ class GUI {
         } catch (IllegalAccessException e) {
         }
 
+        /*
+         * we want something like this
+         * ┌─────────────────────┬──────┐
+         * │·····················│······│
+         * │·····················│·Map··│
+         * │·······Console·······│······│
+         * │·····················├──────┤
+         * ├──────────────┬──────┤······│
+         * │··Text·Input··│·Send·│·Inv.·│
+         * ├──────────┬───┴──────┤······│
+         * │·Shortcut·│·Shortcut·│······│
+         * └──────────┴──────────┴──────┘
+         */
         frame = new JFrame();
 
         // close (and later save) on quit
@@ -52,9 +67,18 @@ class GUI {
         });
 
         // main containing box
-        Box frameBox = Box.createVerticalBox();
+        Box frameBox = Box.createHorizontalBox();
         frameBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        frame.add(frameBox);
+
+        Box leftBox = Box.createVerticalBox();
+        Box rightBox = Box.createVerticalBox();
+
+        frameBox.add(leftBox);
+        frameBox.add(rightBox);
+
+        // {{ LEFT SIDE
         // console
         consoleArea = new JTextPane();
 
@@ -80,8 +104,9 @@ class GUI {
         Box consoleBox = Box.createHorizontalBox();
         consoleBox.add(consoleScrollPane);
 
-        frameBox.add(consoleBox);
+        leftBox.add(consoleBox);
 
+        // text field
         JTextField inputLine = new JTextField();
 
         // process commands on enter
@@ -109,16 +134,71 @@ class GUI {
         inputBox.add(inputLine);
         inputBox.add(inputButton);
 
-        frameBox.add(inputBox);
+        leftBox.add(inputBox);
 
-        frame.add(frameBox);
+        // shortcuts
+        Box shortcutBox = Box.createHorizontalBox();
+
+        JButton testButton1 = new JButton("sample");
+        shortcutBox.add(testButton1);
+        JButton testButton2 = new JButton("sample");
+        shortcutBox.add(testButton2);
+        JButton testButton3 = new JButton("sample");
+        shortcutBox.add(testButton3);
+        JButton testButton4 = new JButton("sample");
+        shortcutBox.add(testButton4);
+
+        leftBox.add(shortcutBox);
+
+        // }}
+        // {{ RIGHT SIDE
+        // map
+        JTextPane mapArea = new JTextPane();
+        mapArea.setBackground(new Color(0, 0, 0));
+        mapArea.setForeground(new Color(128, 255, 128));
+        try {
+            mapArea
+                    .setFont(Font.createFont(Font.TRUETYPE_FONT, GUI.class.getResourceAsStream("Monoid-Regular.ttf"))
+                            .deriveFont(16f));
+        } catch (FontFormatException e) {
+            mapArea.setFont(new Font("monospace", Font.PLAIN, 16));
+        } catch (IOException e) {
+        }
+        mapArea.setEditable(false);
+        mapArea.setPreferredSize(new Dimension(256, 384));
+        mapArea.setMaximumSize(new Dimension(512, 768));
+
+        rightBox.add(mapArea);
+
+        inventoryArea = new JTextArea();
+        inventoryArea.setFont(new Font("monospace", Font.PLAIN, 24));
+
+        JScrollPane inventoryScroll = new JScrollPane(inventoryArea);
+
+        inventoryScroll.setBackground(new Color(164, 164, 164));
+        inventoryScroll.setPreferredSize(new Dimension(256, 256));
+
+        rightBox.add(inventoryScroll);
+
+        // inventory
+
+        // }}
 
         frame.pack();
 
-        frame.setSize(788, 646);
+        frame.setSize(1044, 646);
 
         frame.setVisible(true);
 
         inputLine.requestFocusInWindow();
+    }
+
+    public static void rerenderInventory() {
+        String text = "";
+
+        for (Item item : MSPFAGame.getPlayer().getInventory()) {
+            text += item.getName() + "\n";
+        }
+        inventoryArea.setText(text);
     }
 }
