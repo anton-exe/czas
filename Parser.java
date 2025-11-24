@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.Map;
 import java.util.Set;
@@ -51,36 +50,23 @@ class Parser {
                     for (Item item : Game.getPlayer().getInventory()) {
                         GUI.printf("- %s: %s\n", item.getName(), item.getDescription());
                     }
-                    GUI.println();
                 };
             }),
             Map.entry("look", new Command("look", "look around", "look",
                     "list item containers") {
                 @Override
                 public void commandLogic(String args) {
-                    Set<String> itemAreas = Game.getPlayer().getCurrentRoom().getItemAreas();
-                    ArrayList<Item> floorItems = Game.getPlayer().getCurrentRoom().getFloorItems();
-                    if (itemAreas.size() < 2 && floorItems.size() < 1) {
+                    Set<String> itemKeys = Game.getPlayer().getCurrentRoom().getGrabbableKeys();
+                    if (itemKeys.size() < 1) {
                         GUI.println("nothing here!");
                         return;
                     }
-                    if (itemAreas.size() > 1) {
-                        GUI.print("you see: ");
-                        for (String area : itemAreas) {
-                            if (area == "floor") {
-                                continue;
-                            }
-                            GUI.print(" " + area);
-                        }
-                        GUI.println();
+                    GUI.print("you see: ");
+                    for (String area : itemKeys) {
+                        GUI.print(area + ", ");
                     }
-                    if (floorItems.size() > 0) {
-                        GUI.println("the floor has:");
-                        for (Item item : floorItems) {
-                            GUI.printf("- %s", item.getName());
-                        }
-                        GUI.println();
-                    }
+                    GUI.backspace(2);
+                    GUI.println();
                 };
             }),
             Map.entry("name", new Command("name", "set your name", "name &lt;new name&gt;",
@@ -95,21 +81,15 @@ class Parser {
                     GUI.printf("Your name is now: %s\n", Game.getPlayer().getName());
                 };
             }),
-            Map.entry("open", new Command("open", "open a container", "open &lt;container&gt;",
-                    "open a container and take all items inside") {
+            Map.entry("take", new Command("take", "take", "take &lt;item&gt;",
+                    "take an item, or all items from a container") {
                 @Override
                 public void commandLogic(String args) {
-                    if (args.length() < 1 || args == "floor") {
-                        GUI.print("you need to specify a container!\n");
+                    if (args.length() < 1) {
+                        GUI.print("you need to specify an item!\n");
                         return;
                     }
-                    Game.getPlayer().takeItemContainer(args);
-                };
-            }),
-            Map.entry("pickup", new Command("pickup", "pickup all floor items", "pickup") {
-                @Override
-                public void commandLogic(String args) {
-                    Game.getPlayer().takeItemContainer("floor");
+                    Game.getPlayer().takeItems(args);
                 };
             }),
             Map.entry("quit", new Command("quit", "quit the game") {

@@ -12,7 +12,7 @@ The new and enhanced Java text adventure should be used to illustrate many key J
 
 [½] Input parsing: String manipulation, tokenization, and command pattern interpretation.
 
-[ ] Generics: Containers or utilities using generic classes.
+[√] Generics: Containers or utilities using generic classes.
 
 [ ] Enums: Defining command types, directions, or game states.
 
@@ -43,7 +43,7 @@ Here are some possible extensions you might use to implement some of the above:
 
 [ ] Implement saving and loading: Allow players to save game state and resume later.
 
-[ ] Improve command parser: Support more nuanced commands, synonyms, or multi-word inputs for richer interaction.
+[√] Improve command parser: Support more nuanced commands, synonyms, or multi-word inputs for richer interaction.
 
 [ ] Add sound or basic graphics: Integrate simple audio cues or ASCII art to enhance immersion.
 

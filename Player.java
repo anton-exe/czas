@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+import java.util.List;
 
 class Player {
     private String name;
     private Room currentRoom;
-    private ArrayList<Item> inventory;
+    private List<Item> inventory;
 
     public Player(String name, Room startingRoom) {
         this.name = name;
@@ -11,25 +12,27 @@ class Player {
         this.inventory = new ArrayList<>();
     }
 
-    public void takeItemContainer(String area) {
-        ArrayList<Item> items = currentRoom.takeItemContainer(area);
+    public void takeItems(String key) {
+        Grabbable items = currentRoom.takeItems(key);
         if (items == null) {
             GUI.println("<font color=red>no such container!</font>");
             return;
         }
-        inventory.addAll(items);
-        GUI.println("picked up:");
-        for (Item item : items) {
-            GUI.printf("- %s\n", item.getName());
+        inventory.addAll(items.getItems());
+        if (items.getItems().size() <= 1) {
+            GUI.println("picked up: " + items.getItems().get(0).getName());
+        } else {
+            GUI.println("picked up:");
+            for (Item item : items.getItems()) {
+                GUI.printf("- %s\n", item.getName());
+            }
         }
         GUI.rerenderInventory();
     }
 
     public void dropItem(String itemName) {
         Item item = null;
-        System.out.println();
         for (Item i : inventory) {
-            System.out.println(i.getName());
             if (i.getName().equals(itemName)) {
                 item = i;
             }
@@ -43,17 +46,12 @@ class Player {
     }
 
     public void dropItem(Item item) {
-        dropItem(item, "floor");
-        GUI.rerenderInventory();
-    }
-
-    public void dropItem(Item item, String area) {
-        currentRoom.dropItem(item, area);
+        currentRoom.dropItem(item);
         inventory.remove(item);
         GUI.rerenderInventory();
     }
 
-    public ArrayList<Item> getInventory() {
+    public List<Item> getInventory() {
         return inventory;
     }
 

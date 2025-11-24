@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import java.io.IOException;
 
 import javax.swing.*;
@@ -11,7 +12,7 @@ class GUI {
     private static JFrame frame;
     private static JTextPane consoleArea;
     private static JScrollPane consoleScrollPane;
-    private static JTextArea inventoryArea;
+    private static Box inventoryBox;
 
     public static void print(String text) {
         console += text.replaceAll("\n", "<br>");
@@ -30,6 +31,17 @@ class GUI {
 
     public static void printf(String format, Object... args) {
         print(String.format(format, args));
+    }
+
+    public static void backspace(int chars) {
+        console = console.substring(0, console.length() - chars);
+        consoleArea.setText("<html>" + console + "</html>");
+
+        consoleArea.setCaretPosition(consoleArea.getDocument().getLength());
+    }
+
+    public static void backspace() {
+        backspace(1);
     }
 
     public static void init() {
@@ -112,11 +124,7 @@ class GUI {
         Action inputAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                print("\n\n<font color=#aaccff>==> " + inputLine.getText() + "</font>\n\n");
-                GUI.print("<font color=#ffffaa>");
-                Parser.parseCmd(inputLine.getText());
-                GUI.print("</font>");
-                Game.printInfo();
+                runCommand(inputLine.getText());
                 inputLine.setText("");
             }
         };
@@ -138,14 +146,23 @@ class GUI {
         // shortcuts
         Box shortcutBox = Box.createHorizontalBox();
 
-        JButton testButton1 = new JButton("sample");
-        shortcutBox.add(testButton1);
-        JButton testButton2 = new JButton("sample");
-        shortcutBox.add(testButton2);
-        JButton testButton3 = new JButton("sample");
-        shortcutBox.add(testButton3);
-        JButton testButton4 = new JButton("sample");
-        shortcutBox.add(testButton4);
+        JButton invButton = new JButton("inventory");
+        invButton.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                runCommand("inv");
+            }
+        });
+        shortcutBox.add(invButton);
+
+        JButton lookButton = new JButton("look");
+        lookButton.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                runCommand("look");
+            }
+        });
+        shortcutBox.add(lookButton);
 
         leftBox.add(shortcutBox);
 
@@ -169,10 +186,9 @@ class GUI {
 
         rightBox.add(mapArea);
 
-        inventoryArea = new JTextArea();
-        inventoryArea.setFont(new Font("monospace", Font.PLAIN, 24));
+        inventoryBox = Box.createVerticalBox();
 
-        JScrollPane inventoryScroll = new JScrollPane(inventoryArea);
+        JScrollPane inventoryScroll = new JScrollPane(inventoryBox);
 
         inventoryScroll.setBackground(new Color(164, 164, 164));
         inventoryScroll.setPreferredSize(new Dimension(256, 256));
@@ -193,11 +209,37 @@ class GUI {
     }
 
     public static void rerenderInventory() {
-        String text = "";
-
+        inventoryBox.removeAll();
         for (Item item : Game.getPlayer().getInventory()) {
-            text += item.getName() + "\n";
+            try {
+                Box itemBox = Box.createHorizontalBox();
+
+                itemBox.setMaximumSize(new Dimension(100000, 32));
+
+                JLabel picLabel = new JLabel(
+                        new ImageIcon(item.getIcon().getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH)));
+                JTextArea itemName = new JTextArea(item.getName());
+
+                itemName.setEditable(false);
+                itemName.setFont(new Font("monospace", Font.PLAIN, 24));
+
+                itemBox.add(picLabel);
+                itemBox.add(itemName);
+
+                inventoryBox.add(itemBox);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        inventoryArea.setText(text);
+        // frame.pack();
+        SwingUtilities.updateComponentTreeUI(inventoryBox);
+    }
+
+    private static void runCommand(String cmd) {
+        print("\n\n<font color=#aaccff>==> " + cmd + "</font>\n\n");
+        print("<font color=#ffffaa>");
+        Parser.parseCmd(cmd);
+        print("</font>");
+        Game.printInfo();
     }
 }

@@ -6,20 +6,24 @@
             "conns": {
                 "out": "uphall"
             },
-            "items": {
-                "chest": [
+            "items": [
+                [
+                    {
+                        "name": "glasses",
+                        "description": "aeiouaeiouaeiouaeiouaeiouaeiouaeiouaeiou"
+                    },
+                    "desk",
                     {
                         "name": "watch",
-                        "description": "placeholder test item"
+                        "description": "placeholder test item",
+                        "icon": "time"
                     }
                 ],
-                "floor": [
-                    {
-                        "name": "placeholder",
-                        "description": "..."
-                    }
-                ]
-            }
+                {
+                    "name": "placeholder",
+                    "description": "..."
+                }
+            ]
         },
         "uphall": {
             "desc": "in the upstairs hallway",
