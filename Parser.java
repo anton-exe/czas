@@ -110,6 +110,7 @@ class Parser {
         } else {
             GUI.printf("<font color=red>ERROR! %s is not a valid command!</font>\n", commandWord);
         }
+        GUI.rerender();
     }
 }
 

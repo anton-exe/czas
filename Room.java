@@ -14,11 +14,17 @@ class Room {
     private String description;
     private Map<String, Room> exits; // Map direction to neighboring Room
     private Map<String, Grabbable> items;
+    private int mapX;
+    private int mapY;
+    private int mapI;
 
-    public Room(String description, JsonNode itemNode) {
+    public Room(String description, JsonNode itemNode, int mapX, int mapY, int mapI) {
         this.description = description;
         this.exits = new HashMap<>();
         this.items = new HashMap<>();
+        this.mapX = mapX;
+        this.mapY = mapY;
+        this.mapI = mapI;
 
         if (itemNode == null) {
             return;
@@ -98,5 +104,17 @@ class Room {
 
     public String getLongDescription() {
         return "You are " + description + ".\nExits: " + getExitString();
+    }
+
+    public int getMapX() {
+        return mapX;
+    }
+
+    public int getMapY() {
+        return mapY;
+    }
+
+    public int getMapI() {
+        return mapI;
     }
 }

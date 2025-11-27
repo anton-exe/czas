@@ -27,7 +27,6 @@ class Player {
                 GUI.printf("- %s\n", item.getName());
             }
         }
-        GUI.rerenderInventory();
     }
 
     public void dropItem(String itemName) {
@@ -42,13 +41,11 @@ class Player {
             return;
         }
         dropItem(item);
-        GUI.rerenderInventory();
     }
 
     public void dropItem(Item item) {
         currentRoom.dropItem(item);
         inventory.remove(item);
-        GUI.rerenderInventory();
     }
 
     public List<Item> getInventory() {

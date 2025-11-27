@@ -7,27 +7,34 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.io.IOException;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Game {
     private static Player player;
     private static HashMap<String, Room> rooms;
+    private static String[][] maps;
 
     public static void main(String[] args) throws IOException {
         rooms = new HashMap<>();
 
-        Room voidRoom = new Room("in the void", null);
+        Room voidRoom = new Room("in the void", null, 0, 0, 0);
         Room startRoom = voidRoom;
 
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(Game.class.getResourceAsStream("/rooms.json"));
+        JsonNode jsonNode = objectMapper.readTree(Game.class.getResourceAsStream("/data.json"));
+
+        maps = objectMapper.readValue(jsonNode.get("maps").toString(), new TypeReference<String[][]>() {
+        });
 
         Iterator<String> roomNames = jsonNode.get("rooms").fieldNames();
         while (roomNames.hasNext()) {
             String roomName = roomNames.next();
-            Room room = new Room(jsonNode.get("rooms").get(roomName).get("desc").asText(""),
-                    jsonNode.get("rooms").get(roomName).get("items"));
+            JsonNode roomNode = jsonNode.get("rooms").get(roomName);
+            Room room = new Room(roomNode.get("desc").asText(""),
+                    roomNode.get("items"), roomNode.get("map").get("x").asInt(0), roomNode.get("map").get("y").asInt(0),
+                    roomNode.get("map").get("index").asInt(0));
             rooms.put(roomName, room);
 
             if (roomName.equals(jsonNode.get("START").asText())) {
@@ -79,5 +86,9 @@ public class Game {
 
     public static Player getPlayer() {
         return player;
+    }
+
+    public static String[][] getMaps() {
+        return maps;
     }
 }

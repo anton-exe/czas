@@ -1,0 +1,83 @@
+{
+    "START": "bedroom",
+    "rooms": {
+        "bedroom": {
+            "desc": "inside your own bedroom",
+            "conns": {
+                "hall": "hall"
+            },
+            "map": {
+                "x": 9,
+                "y": 1,
+                "index": 0
+            },
+            "items": [
+                [
+                    {
+                        "name": "glasses",
+                        "description": "aeiouaeiouaeiouaeiouaeiouaeiouaeiouaeiou"
+                    },
+                    "desk",
+                    {
+                        "name": "watch",
+                        "description": "placeholder test item",
+                        "icon": "time"
+                    }
+                ],
+                {
+                    "name": "placeholder",
+                    "description": "..."
+                }
+            ]
+        },
+        "hall": {
+            "desc": "in the hallway",
+            "conns": {
+                "bed": "bedroom",
+                "bath": "bathroom",
+                "kitchen": "kitchen"
+            },
+            "map": {
+                "x": 7,
+                "y": 4,
+                "index": 0
+            }
+        },
+        "bathroom": {
+            "desc": "in the bathroom",
+            "conns": {
+                "hall": "hall"
+            },
+            "map": {
+                "x": 6,
+                "y": 2,
+                "index": 0
+            }
+        },
+        "kitchen": {
+            "desc": "in your kitchen",
+            "conns": {
+                "hall": "hall"
+            },
+            "map": {
+                "x": 15,
+                "y": 7,
+                "index": 0
+            }
+        }
+    },
+    "maps": [
+        [
+            "┌──────┬───────────┐",
+            "│ Bath │           │",
+            "│ room │   Bedroom │",
+            "├────-─┴─-─────────┤",
+            "│          .       │",
+            "│ Hall     .Kitchen│",
+            "└──────────┐       │",
+            "           │       │",
+            "           │       │",
+            "           └─-─────┘"
+        ]
+    ]
+}

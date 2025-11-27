@@ -4,6 +4,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.swing.*;
 
@@ -13,6 +14,8 @@ class GUI {
     private static JTextPane consoleArea;
     private static JScrollPane consoleScrollPane;
     private static Box inventoryBox;
+    private static JTextField inputLine;
+    private static JTextPane mapArea;
 
     public static void print(String text) {
         console += text.replaceAll("\n", "<br>");
@@ -118,7 +121,7 @@ class GUI {
         leftBox.add(consoleBox);
 
         // text field
-        JTextField inputLine = new JTextField();
+        inputLine = new JTextField();
 
         // process commands on enter
         Action inputAction = new AbstractAction() {
@@ -169,18 +172,18 @@ class GUI {
         // }}
         // {{ RIGHT SIDE
         // map
-        JTextPane mapArea = new JTextPane();
+        mapArea = new JTextPane();
         mapArea.setBackground(new Color(0, 0, 0));
         mapArea.setForeground(new Color(128, 255, 128));
         try {
-            mapArea
-                    .setFont(Font.createFont(Font.TRUETYPE_FONT, GUI.class.getResourceAsStream("Monoid-Regular.ttf"))
-                            .deriveFont(16f));
+            mapArea.setFont(Font.createFont(Font.TRUETYPE_FONT,
+                    GUI.class.getResourceAsStream("Monoid-Regular.ttf")).deriveFont(16f));
         } catch (FontFormatException e) {
-            mapArea.setFont(new Font("monospace", Font.PLAIN, 16));
+            mapArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
         } catch (IOException e) {
         }
         mapArea.setEditable(false);
+        mapArea.setContentType("text/html");
         mapArea.setPreferredSize(new Dimension(256, 384));
         mapArea.setMaximumSize(new Dimension(512, 768));
 
@@ -206,9 +209,11 @@ class GUI {
         frame.setVisible(true);
 
         inputLine.requestFocusInWindow();
+
+        rerender();
     }
 
-    public static void rerenderInventory() {
+    public static void rerender() {
         inventoryBox.removeAll();
         for (Item item : Game.getPlayer().getInventory()) {
             try {
@@ -231,7 +236,20 @@ class GUI {
                 e.printStackTrace();
             }
         }
-        // frame.pack();
+
+        Room curRoom = Game.getPlayer().getCurrentRoom();
+        String[] curMap = Arrays.copyOf(Game.getMaps()[curRoom.getMapI()], Game.getMaps()[curRoom.getMapI()].length);
+        curMap[curRoom.getMapY()] = curMap[curRoom.getMapY()].substring(0, curRoom.getMapX()) + "☺"
+                + curMap[curRoom.getMapY()].substring(curRoom.getMapX() + 1);
+
+        String map = "";
+
+        for (String mapRow : curMap) {
+            map += mapRow + "\n";
+        }
+
+        mapArea.setText("<pre>" + map.substring(0, map.length() - 1) + "</pre>");
+
         SwingUtilities.updateComponentTreeUI(inventoryBox);
     }
 
@@ -241,5 +259,6 @@ class GUI {
         Parser.parseCmd(cmd);
         print("</font>");
         Game.printInfo();
+        inputLine.requestFocusInWindow();
     }
 }
