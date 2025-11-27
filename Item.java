@@ -1,11 +1,12 @@
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 
-class Item implements Grabbable {
+class Item implements Grabbable, Serializable {
     private String description;
     private String name;
     private String icon = "_";
@@ -52,7 +53,7 @@ interface Grabbable {
     String getName();
 }
 
-class ItemContainer implements Grabbable {
+class ItemContainer implements Grabbable, Serializable {
     private String name;
     private List<Item> items;
 

@@ -16,7 +16,7 @@ The new and enhanced Java text adventure should be used to illustrate many key J
 
 [ ] Enums: Defining command types, directions, or game states.
 
-[ ] Serialization: For saving complex game objects.
+[√] Serialization: For saving complex game objects.
 
 [ ] Unit testing: JUnit-based test cases for game mechanics.
 
@@ -41,11 +41,11 @@ Here are some possible extensions you might use to implement some of the above:
 
 [ ] Expand room complexity: Add more rooms with branching paths, hidden passages, or special events triggered by player actions.
 
-[ ] Implement saving and loading: Allow players to save game state and resume later.
+[√] Implement saving and loading: Allow players to save game state and resume later.
 
 [√] Improve command parser: Support more nuanced commands, synonyms, or multi-word inputs for richer interaction.
 
-[ ] Add sound or basic graphics: Integrate simple audio cues or ASCII art to enhance immersion.
+[√] Add sound or basic graphics: Integrate simple audio cues or ASCII art to enhance immersion.
 
 [ ] Support multiple players or multiplayer: Enable turn-based multiplayer gameplay or allow multiple players in the same world.
 

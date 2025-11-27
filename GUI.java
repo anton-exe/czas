@@ -210,10 +210,10 @@ class GUI {
 
         inputLine.requestFocusInWindow();
 
-        rerender();
+        render();
     }
 
-    public static void rerender() {
+    public static void render() {
         inventoryBox.removeAll();
         for (Item item : Game.getPlayer().getInventory()) {
             try {
@@ -249,7 +249,10 @@ class GUI {
         }
 
         mapArea.setText("<pre>" + map.substring(0, map.length() - 1) + "</pre>");
+    }
 
+    public static void rerender() {
+        render();
         SwingUtilities.updateComponentTreeUI(inventoryBox);
     }
 

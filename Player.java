@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-class Player {
+class Player implements Serializable {
     private String name;
     private Room currentRoom;
     private List<Item> inventory;
