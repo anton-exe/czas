@@ -12,21 +12,15 @@
                 "index": 0
             },
             "items": [
-                [
-                    {
-                        "name": "glasses",
-                        "description": "aeiouaeiouaeiouaeiouaeiouaeiouaeiouaeiou"
-                    },
-                    "desk",
-                    {
-                        "name": "watch",
-                        "description": "placeholder test item",
-                        "icon": "time"
-                    }
-                ],
                 {
-                    "name": "placeholder",
-                    "description": "..."
+                    "name": "glasses",
+                    "description": "you need these to actually see anything",
+                    "icon": "glasses"
+                },
+                {
+                    "name": "bag",
+                    "description": "has your laptop inside. kind of needed for the CS course",
+                    "icon": "bag"
                 }
             ]
         },
@@ -41,6 +35,9 @@
                 "x": 7,
                 "y": 4,
                 "index": 0
+            },
+            "requirements": {
+                "glasses": "you can't see without your glasses!"
             }
         },
         "bathroom": {
@@ -52,6 +49,19 @@
                 "x": 6,
                 "y": 2,
                 "index": 0
+            },
+            "items": [
+                [
+                    "toothbrush",
+                    {
+                        "name": "clean teeth",
+                        "description": "running late is one thing but dirty teeth? unacceptable",
+                        "icon": "+1"
+                    }
+                ]
+            ],
+            "requirements": {
+                "\"full\" stomach": "you need to eat first!"
             }
         },
         "kitchen": {
@@ -63,7 +73,17 @@
                 "x": 15,
                 "y": 7,
                 "index": 0
-            }
+            },
+            "items": [
+                [
+                    "breakfast",
+                    {
+                        "name": "\"full\" stomach",
+                        "description": "peak diet",
+                        "icon": "prongle"
+                    }
+                ]
+            ]
         }
     },
     "maps": [

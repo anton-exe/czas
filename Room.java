@@ -18,14 +18,16 @@ class Room implements Serializable {
     private int mapX;
     private int mapY;
     private int mapI;
+    private Map<String, String> requirements;
 
-    public Room(String description, JsonNode itemNode, int mapX, int mapY, int mapI) {
+    public Room(String description, JsonNode itemNode, int mapX, int mapY, int mapI, Map<String, String> requirements) {
         this.description = description;
         this.exits = new HashMap<>();
         this.items = new HashMap<>();
         this.mapX = mapX;
         this.mapY = mapY;
         this.mapI = mapI;
+        this.requirements = requirements;
 
         if (itemNode == null) {
             return;
@@ -79,10 +81,6 @@ class Room implements Serializable {
 
     }
 
-    public void dropItem(Item item) {
-        items.put(item.getName(), item);
-    }
-
     public String getDescription() {
         return description;
     }
@@ -117,5 +115,29 @@ class Room implements Serializable {
 
     public int getMapI() {
         return mapI;
+    }
+
+    public boolean canEnter(Player player) {
+        if (requirements == null) {
+            return true;
+        }
+
+        Set<String> requiredItems = requirements.keySet();
+
+        for (Item item : player.getInventory()) {
+            requiredItems.remove(item.getName());
+        }
+
+        if (requiredItems.isEmpty()) {
+            return true;
+        }
+
+        GUI.print("<font color=red>wait!");
+        for (String key : requiredItems) {
+            GUI.print("\n" + requirements.get(key));
+        }
+        GUI.println("</font>");
+
+        return false;
     }
 }

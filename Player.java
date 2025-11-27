@@ -16,7 +16,7 @@ class Player implements Serializable {
     public void takeItems(String key) {
         Grabbable items = currentRoom.takeItems(key);
         if (items == null) {
-            GUI.println("<font color=red>no such container!</font>");
+            GUI.println("<font color=red>no such item!</font>");
             return;
         }
         inventory.addAll(items.getItems());
@@ -28,25 +28,6 @@ class Player implements Serializable {
                 GUI.printf("- %s\n", item.getName());
             }
         }
-    }
-
-    public void dropItem(String itemName) {
-        Item item = null;
-        for (Item i : inventory) {
-            if (i.getName().equals(itemName)) {
-                item = i;
-            }
-        }
-        if (item == null) {
-            GUI.println("<font color=red>no such item!</font>");
-            return;
-        }
-        dropItem(item);
-    }
-
-    public void dropItem(Item item) {
-        currentRoom.dropItem(item);
-        inventory.remove(item);
     }
 
     public List<Item> getInventory() {
@@ -72,8 +53,9 @@ class Player implements Serializable {
     public void move(String direction) {
         Room nextRoom = currentRoom.getExit(direction);
         if (nextRoom != null) {
-            currentRoom = nextRoom;
-            // System.out.println("You moved to: " + currentRoom.getDescription());
+            if (nextRoom.canEnter(this)) {
+                currentRoom = nextRoom;
+            }
         } else {
             GUI.print("You can't go that way!\n");
         }

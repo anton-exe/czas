@@ -28,17 +28,6 @@ class Parser {
                     Game.getPlayer().move(args);
                 };
             }),
-            Map.entry("drop", new Command("drop", "drop an item", "drop &lt;item&gt;",
-                    "drop an item from your inventory onto the floor") {
-                @Override
-                public void commandLogic(String args) {
-                    if (args.length() < 1) {
-                        GUI.print("you need to specify an item!\n");
-                        return;
-                    }
-                    Game.getPlayer().dropItem(args);
-                };
-            }),
             Map.entry("inv", new Command("inv", "view inventory", "inv", "") {
                 @Override
                 public void commandLogic(String args) {
@@ -78,11 +67,12 @@ class Parser {
                         return;
                     }
                     Game.getPlayer().setName(args);
-                    GUI.printf("Your name is now: %s\n", Game.getPlayer().getName());
+                    GUI.printf("Your name is now: %s. not that it actually changes anything.\n",
+                            Game.getPlayer().getName());
                 };
             }),
-            Map.entry("take", new Command("take", "take", "take &lt;item&gt;",
-                    "take an item, or all items from a container") {
+            Map.entry("take", new Command("take", "take or use", "take &lt;item&gt;",
+                    "take or use an item") {
                 @Override
                 public void commandLogic(String args) {
                     if (args.length() < 1) {

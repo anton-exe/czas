@@ -7,8 +7,8 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 class Item implements Grabbable, Serializable {
-    private String description;
-    private String name;
+    private String description = "";
+    private String name = "???";
     private String icon = "_";
 
     public Item() {

@@ -40,7 +40,7 @@ public class Game {
             rooms = gameObj.getRooms();
             savefile.close();
         } else {
-            Room voidRoom = new Room("in the void", null, 0, 0, 0);
+            Room voidRoom = new Room("in the void", null, 0, 0, 0, new HashMap<String, String>());
             Room startRoom = voidRoom;
 
             rooms = new HashMap<>();
@@ -52,7 +52,8 @@ public class Game {
                 Room room = new Room(roomNode.get("desc").asText(""),
                         roomNode.get("items"), roomNode.get("map").get("x").asInt(0),
                         roomNode.get("map").get("y").asInt(0),
-                        roomNode.get("map").get("index").asInt(0));
+                        roomNode.get("map").get("index").asInt(0),
+                        objectMapper.convertValue(roomNode.get("requirements"), Map.class));
                 rooms.put(roomName, room);
 
                 if (roomName.equals(jsonNode.get("START").asText())) {
@@ -74,7 +75,7 @@ public class Game {
             }
 
             // create the Player character and start outside
-            player = new Player("DebugPlayer", startRoom);
+            player = new Player("the Bob from all those examples", startRoom);
         }
 
         // show GUI
@@ -82,7 +83,12 @@ public class Game {
         GUI.init();
 
         GUI.println();
-        GUI.println("[[PLACEHOLDER]]");
+        if (SAVE_FILE.exists()) {
+            GUI.println("You need to get the bus to the University of Stupidly Far. You are running out of time.");
+        } else {
+            GUI.println("You wake up. It's tuesday morning and you check your phone.");
+            GUI.println("\noh shit oh fuck your once every two hours bus leaves in 30 minutes\n");
+        }
         GUI.println("\nType 'help' if you need help.");
 
         printInfo();
