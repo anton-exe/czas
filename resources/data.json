@@ -67,7 +67,8 @@
         "kitchen": {
             "desc": "in your kitchen",
             "conns": {
-                "hall": "hall"
+                "hall": "hall",
+                "out": "end"
             },
             "map": {
                 "x": 15,
@@ -84,6 +85,19 @@
                     }
                 ]
             ]
+        },
+        "end": {
+            "desc": "",
+            "conns": {},
+            "map": {
+                "x": 0,
+                "y": 0,
+                "index": 1
+            },
+            "requirements": {
+                "clean teeth": "being late is one thing but being unhygienic is just too far!",
+                "bag": "your bag has some fairly important things in it!"
+            }
         }
     },
     "maps": [
@@ -98,6 +112,9 @@
             "           │       │",
             "           │       │",
             "           └─-─────┘"
+        ],
+        [
+            " "
         ]
     ]
 }

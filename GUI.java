@@ -16,6 +16,7 @@ class GUI {
     private static Box inventoryBox;
     private static JTextField inputLine;
     private static JTextPane mapArea;
+    private static boolean commandsBlocked = true;
 
     public static void print(String text) {
         console += text.replaceAll("\n", "<br>");
@@ -45,6 +46,14 @@ class GUI {
 
     public static void backspace() {
         backspace(1);
+    }
+
+    public static void blockCmds() {
+        commandsBlocked = true;
+    }
+
+    public static void unblockCmds() {
+        commandsBlocked = false;
     }
 
     public static void init() {
@@ -257,9 +266,16 @@ class GUI {
     }
 
     private static void runCommand(String cmd) {
+        if (commandsBlocked) {
+            return;
+        }
         print("\n\n<font color=#aaccff>==> " + cmd + "</font>\n\n");
         print("<font color=#ffffaa>");
         Parser.parseCmd(cmd);
+
+        if (commandsBlocked) {
+            return;
+        }
         print("</font>");
         Game.printInfo();
         inputLine.requestFocusInWindow();

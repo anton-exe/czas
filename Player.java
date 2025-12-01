@@ -56,6 +56,10 @@ class Player implements Serializable {
             if (nextRoom.canEnter(this)) {
                 currentRoom = nextRoom;
             }
+
+            if (currentRoom == Game.getRoom("end")) {
+                Game.endGame();
+            }
         } else {
             GUI.print("You can't go that way!\n");
         }

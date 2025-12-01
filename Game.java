@@ -22,10 +22,11 @@ public class Game {
     private static Player player;
     private static Map<String, Room> rooms;
     private static String[][] maps;
+    private static boolean gameOver = false;
 
     public static final File SAVE_FILE = new File("./data.sav");
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(Game.class.getResourceAsStream("/data.json"));
 
@@ -40,7 +41,7 @@ public class Game {
             rooms = gameObj.getRooms();
             savefile.close();
         } else {
-            Room voidRoom = new Room("in the void", null, 0, 0, 0, new HashMap<String, String>());
+            Room voidRoom = new Room("in the void", null, 0, 0, 1, new HashMap<String, String>());
             Room startRoom = voidRoom;
 
             rooms = new HashMap<>();
@@ -49,6 +50,7 @@ public class Game {
             while (roomNames.hasNext()) {
                 String roomName = roomNames.next();
                 JsonNode roomNode = jsonNode.get("rooms").get(roomName);
+                // @SuppressWarnings("unchecked") // it's fine
                 Room room = new Room(roomNode.get("desc").asText(""),
                         roomNode.get("items"), roomNode.get("map").get("x").asInt(0),
                         roomNode.get("map").get("y").asInt(0),
@@ -84,14 +86,43 @@ public class Game {
 
         GUI.println();
         if (SAVE_FILE.exists()) {
-            GUI.println("You need to get the bus to the University of Stupidly Far. You are running out of time.");
+            GUI.println("[You need to get the bus to the University of Stupidly Far. You are running out of time.]");
         } else {
-            GUI.println("You wake up. It's tuesday morning and you check your phone.");
-            GUI.println("\noh shit oh fuck your once every two hours bus leaves in 30 minutes\n");
+            GUI.print("You wake up.");
+            Thread.sleep(2000);
+            GUI.println(" It's a beatiful tuesday morning and you check your phone.");
+            Thread.sleep(2500);
+            GUI.println("\noh shit oh fuck your once every two hours bus leaves in 30 minutes");
+            Thread.sleep(2000);
+            GUI.println("you need to get ready now shit you went to bed at 20:00 HOW—");
+            Thread.sleep(2000);
         }
-        GUI.println("\nType 'help' if you need help.");
+        GUI.println("\n[Type 'help' if you need help.]");
 
         printInfo();
+
+        GUI.unblockCmds();
+
+        while (!gameOver) {
+            System.out.print("");
+        }
+
+        GUI.blockCmds();
+        GUI.println("</font>\n\n\n\nYou run over to the bus stop as fast as you can.");
+        Thread.sleep(1500);
+        GUI.print("\nLuckily, the bus is still there and you get on board");
+        Thread.sleep(1500);
+        GUI.println(", after struggling to get your leap card out of your wallet at the door.");
+        Thread.sleep(2000);
+        GUI.println("You sit at a seat near the back and fall asleep...");
+        Thread.sleep(4000);
+        GUI.println(
+                "\nWhen you wake back up 3 hours later, the bus is stuck in traffic and you are still barely halfway.");
+        Thread.sleep(1500);
+        GUI.println("Today's exam is already halfway done.");
+        Thread.sleep(1500);
+        GUI.println("\n\n== THE END ==\n\n");
+        GUI.print("(delete data.sav if you want to play again for some strange reason)");
     }
 
     public static void printInfo() {
@@ -128,6 +159,10 @@ public class Game {
 
     public static Room getRoom(String name) {
         return rooms.get(name);
+    }
+
+    public static void endGame() {
+        gameOver = true;
     }
 }
 
